@@ -10,10 +10,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
+import pickle
 
 
 
-df = pd.read_excel('stress_data.xlsx', header=None)
+df = pd.read_excel('Data\StressData.xlsx', header=None)
 
 df.columns=['Target', 'ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']
 X_train, X_test, y_train, y_test = train_test_split(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']], df['Target'],
@@ -38,6 +39,9 @@ batches = [5,10,20]
 param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches, init=init)
 grid = GridSearchCV(estimator=model,param_grid=param_grid)
 grid_result = grid.fit(np.array(X_train),np.array(y_train))
+
+filename = 'Stress NeuralNet.sav'
+pickle.dump(grid, open(filename, 'wb'))
 
 print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
 for params, mean_score, scores in grid_result.grid_scores_:
