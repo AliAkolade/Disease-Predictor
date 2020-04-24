@@ -6,7 +6,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn import metrics
 import pickle
 
-df = pd.read_excel('stress_data.xlsx', header=None)
+df = pd.read_excel('Data\StressData.xlsx', header=None)
 
 df.columns=['Target', 'ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']
 X_train, X_test, y_train, y_test = train_test_split(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']], df['Target'],
@@ -43,11 +43,13 @@ plt.show()
 gnb = GaussianNB()
 fit = gnb.fit(X_train, y_train)
 filename = 'Stress GNB NonNorm.sav'
-pickle.dump(model, open(filename, 'wb'))
+pickle.dump(gnb, open(filename, 'wb'))
 
 # on normalized data
 gnb_norm = GaussianNB()
 fit_norm = gnb_norm.fit(X_train_norm, y_train)
+filename = 'Stress GNB Norm.sav'
+pickle.dump(gnb_norm, open(filename, 'wb'))
 
 pred_train = gnb.predict(X_train)
 pred_test = gnb.predict(X_test)

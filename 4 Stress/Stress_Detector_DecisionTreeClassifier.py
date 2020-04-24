@@ -44,14 +44,14 @@ plt.show()
 model = DecisionTreeClassifier(max_leaf_nodes=3)
 fit = model.fit(X_train, y_train)
 import pickle
-filename = 'Stress Decision Tree Norm.sav'
+filename = 'Stress Decision Tree NonNorm.sav'
 pickle.dump(model, open(filename, 'wb'))
 
 # on normalized data
 model_norm = DecisionTreeClassifier(max_leaf_nodes=3)
 fit_norm = model_norm.fit(X_train_norm, y_train)
 
-filename = 'Stress Decision Tree NonNorm.sav'
+filename = 'Stress Decision Tree Norm.sav'
 pickle.dump(model_norm, open(filename, 'wb'))
 
 pred_train = model.predict(X_train)

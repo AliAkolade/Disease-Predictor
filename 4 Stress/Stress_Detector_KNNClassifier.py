@@ -1,12 +1,13 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn import preprocessing
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import metrics
+import pickle
 
-df = pd.read_excel('stress_data.xlsx', header=None)
+df = pd.read_excel('Data\StressData.xlsx', header=None)
 
 df.columns=['Target', 'ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']
 X_train, X_test, y_train, y_test = train_test_split(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']], df['Target'],
@@ -42,6 +43,8 @@ plt.show()
 # on non-normalized data
 knn = KNeighborsClassifier(n_neighbors=5)
 fit = knn.fit(X_train, y_train)
+filename = 'Stress KNN NonNorm.sav'
+pickle.dump(knn, open(filename, 'wb'))
 
 # on normalized data
 knn_norm = KNeighborsClassifier(n_neighbors=5)
