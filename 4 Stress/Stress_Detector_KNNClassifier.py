@@ -49,6 +49,8 @@ pickle.dump(knn, open(filename, 'wb'))
 # on normalized data
 knn_norm = KNeighborsClassifier(n_neighbors=5)
 fit_norm = knn_norm.fit(X_train_norm, y_train)
+filename = 'Stress KNN Norm.sav'
+pickle.dump(knn_norm, open(filename, 'wb'))
 
 pred_train = knn.predict(X_train)
 pred_test = knn.predict(X_test)
