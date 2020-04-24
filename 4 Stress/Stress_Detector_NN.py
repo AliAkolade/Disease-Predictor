@@ -13,7 +13,6 @@ from sklearn.model_selection import GridSearchCV
 import pickle
 
 
-
 df = pd.read_excel('Data\StressData.xlsx', header=None)
 
 df.columns=['Target', 'ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']
@@ -38,10 +37,11 @@ epochs = [50,100,150]
 batches = [5,10,20]
 param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches, init=init)
 grid = GridSearchCV(estimator=model,param_grid=param_grid)
-grid_result = grid.fit(np.array(X_train),np.array(y_train))
+grid_result = grid.fit(np.array(X_train),np.array(y_train), )
 
+print("Done")
 filename = 'Stress NeuralNet.sav'
-pickle.dump(grid, open(filename, 'wb'))
+pickle.dump(grid_result, open(filename, 'wb'))
 
 print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
 for params, mean_score, scores in grid_result.grid_scores_:
