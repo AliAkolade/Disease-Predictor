@@ -3,13 +3,13 @@ import pandas as pd
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.wrappers.scikit_learn import KerasClassifier
-from sklearn.cross_validation import cross_val_score
+from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import LabelEncoder
-from sklearn.cross_validation import StratifiedKFold
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
-from sklearn.grid_search import GridSearchCV
+from sklearn.model_selection import GridSearchCV
 
 
 
