@@ -1,9 +1,10 @@
 import pandas as pd
 from matplotlib import pyplot as plt
 from sklearn import preprocessing
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
 from sklearn import metrics
+import pickle
 
 df = pd.read_excel('stress_data.xlsx', header=None)
 
@@ -41,6 +42,8 @@ plt.show()
 # on non-normalized data
 gnb = GaussianNB()
 fit = gnb.fit(X_train, y_train)
+filename = 'Stress GNB NonNorm.sav'
+pickle.dump(model, open(filename, 'wb'))
 
 # on normalized data
 gnb_norm = GaussianNB()

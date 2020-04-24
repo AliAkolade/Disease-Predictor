@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn.decomposition import PCA
 from matplotlib import pyplot as plt
@@ -7,7 +7,7 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn import metrics
 from sklearn.tree import DecisionTreeClassifier
 
-df = pd.read_excel('stress_data.xlsx', header=None)
+df = pd.read_excel('Data\StressData.xlsx', header=None)
 
 df.columns=['Target', 'ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']
 X_train, X_test, y_train, y_test = train_test_split(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']], df['Target'],
@@ -43,10 +43,16 @@ plt.show()
 # on non-normalized data
 model = DecisionTreeClassifier(max_leaf_nodes=3)
 fit = model.fit(X_train, y_train)
+import pickle
+filename = 'Stress Decision Tree Norm.sav'
+pickle.dump(model, open(filename, 'wb'))
 
 # on normalized data
 model_norm = DecisionTreeClassifier(max_leaf_nodes=3)
 fit_norm = model_norm.fit(X_train_norm, y_train)
+
+filename = 'Stress Decision Tree NonNorm.sav'
+pickle.dump(model_norm, open(filename, 'wb'))
 
 pred_train = model.predict(X_train)
 
