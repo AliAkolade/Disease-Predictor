@@ -30,6 +30,7 @@ def create_model(optimizer='rmsprop',init='glorot_uniform'):
 seed = 7
 np.random.seed(seed)
 
+"""
 model = KerasClassifier(build_fn=create_model,verbose=0)
 optimizers = ['rmsprop','adam']
 init = ['glorot_uniform','normal','uniform']
@@ -37,16 +38,19 @@ epochs = [50,100,150]
 batches = [5,10,20]
 param_grid = dict(optimizer=optimizers, epochs=epochs, batch_size=batches, init=init)
 grid = GridSearchCV(estimator=model,param_grid=param_grid)
-grid_result = grid.fit(np.array(X_train),np.array(y_train), )
-
-print("Done")
+grid_result = grid.fit(np.array(X_train),np.array(y_train))
 filename = 'Stress NeuralNet.sav'
-pickle.dump(grid_result, open(filename, 'wb'))
+#pickle.dump(grid_result, open(filename, 'wb'))
+"""
 
+filename = "Models\Stress NeuralNet.sav"
+grid_result = pickle.load(open(filename, 'rb'))
+
+"""
 print("Best: %f using %s" % (grid_result.best_score_, grid_result.best_params_))
-for params, mean_score, scores in grid_result.grid_scores_:
+for params, mean_score, scores in grid_result.cv_results_:
     print("%f (%f) with: %r" % (scores.mean(), scores.std(), params))
-
+"""
 
 
 # Prediction of stress/no stress class on new dataset
