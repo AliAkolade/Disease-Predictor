@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 import sys
 import cv2, numpy as np
 import time
-from helper.extend_eye import Extand_eyes
+from helperextend_eye import Extand_eyes
 from helper.extend_face_haar import Extend_face_haar
 from helper.popup import Popup
 from detection_factors.factor_time import Time_detect_rule
