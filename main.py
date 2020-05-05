@@ -3,9 +3,7 @@ import time
 
 from kivy.app import App
 from kivy.clock import Clock, mainthread
-
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.lang import Builder
 
 
 class WindowManager(ScreenManager):
