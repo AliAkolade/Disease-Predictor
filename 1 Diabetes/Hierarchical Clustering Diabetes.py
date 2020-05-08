@@ -7,7 +7,7 @@ import pandas as pd
 import pickle
 
 # Importing the dataset
-dataset = pd.read_csv('New Diabetes.csv')
+dataset = pd.read_csv('Data/New Diabetes.csv')
 X = dataset.iloc[:, :-1].values
 y = dataset.iloc[:, 8:9].values
 
@@ -28,6 +28,6 @@ loaded_model = pickle.load(open(filename, 'rb'))
 
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
-y_pred = hc.fit_predict(X_test)
+y_pred = loaded_model.fit_predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 print(cm)

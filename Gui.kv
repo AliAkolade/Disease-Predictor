@@ -1,3 +1,11 @@
+<MyLabel@Label>:
+    size_hint_x: 0.4
+<MyInput@TextInput>:
+<MyBox@BoxLayout>:
+    orientation: 'horizontal'
+    size_hint: (1, None)
+    height: 40
+
 <WindowManager>:
     SplashScreen:
         name: 'Splash'
@@ -5,6 +13,8 @@
         name: 'Select'
     PredictScreen:
         name: 'Predict'
+    SingleScreen:
+        name: 'Single'
 
 <SplashScreen>:
     AnchorLayout:
@@ -17,7 +27,6 @@
                 source: 'Resources\\Bowen.png'
             Label:
                 text: 'Disease Predictor'
-
 
 <SelectScreen>:
     AnchorLayout:
@@ -32,3 +41,76 @@
                 on_release: root.all_page()
             Button:
                 text: 'Predict Individual Diseases'
+
+<PredictScreen>:
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        padding: 10, 5
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            Label:
+                text: 'Please Enter Medical Details'
+                size_hint_y: 0.1
+            ScrollView:
+                BoxLayout:
+                    orientation: 'vertical'
+                    height: self.minimum_height
+                    size_hint_y: None
+                    spacing: 10
+                    MyBox:
+                        MyLabel:
+                            text: 'Age'
+                        MyInput:
+                            id: input_age
+                            hint_text:'Enter Age'
+                            text: '50'
+                    MyBox:
+                        MyLabel:
+                            text: 'Number of Pregnancies'
+                        MyInput:
+                            id: input_preg
+                            text: '6'
+                    MyBox:
+                        MyLabel:
+                            text: 'Glucose'
+                        MyInput:
+                            id: input_glu
+                            text: '148'
+                    MyBox:
+                        MyLabel:
+                            text: 'Blood Sugar'
+                        MyInput:
+                            id: input_bldsgr
+                            text: '72'
+                    MyBox:
+                        MyLabel:
+                            text: 'Skin Thickness'
+                        MyInput:
+                            id: input_sknthck
+                            text: '35'
+                    MyBox:
+                        MyLabel:
+                            text: 'Insulin'
+                        MyInput:
+                            id: input_insln
+                            text: '155.5482233502538'
+                    MyBox:
+                        MyLabel:
+                            text: 'Body Mass Index'
+                        MyInput:
+                            id: input_bmi
+                            text: '33.6'
+                    MyBox:
+                        MyLabel:
+                            text: 'Diabetes Pedigree Function'
+                        MyInput:
+                            id: input_dpf
+                            text: '0.627'
+
+            Button:
+                size_hint: 0.3, 0.05
+                pos_hint: {"x": 0.355}
+                text: 'Predict'
+                on_release: root.predict()
