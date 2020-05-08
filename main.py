@@ -30,10 +30,10 @@ class SelectScreen(Screen):
         self.parent.current = 'Predict'
 
 
-def basic_models(path, X_test, f_scal):
+def basic_models(path, X_test, f_scale):
     X_test = [X_test]
     loaded_model = pickle.load(open(path, 'rb'))
-    if f_scal:
+    if f_scale:
         from sklearn.preprocessing import StandardScaler
         sc = StandardScaler()
         X_test = sc.fit_transform(X_test)
@@ -69,9 +69,43 @@ class PredictScreen(Screen):
             dia = 50
         return dia
 
+    def cvd(self):
+        age = float(self.ids.input_age.text)
+        gender = float(self.ids.input_gen.text)
+        height = float(self.ids.input_h.text)
+        weight = float(self.ids.input_w.text)
+        chol = float(self.ids.input_chl.text)
+        s_bp = float(self.ids.input_sbp.text)
+        d_bp = float(self.ids.input_dbp.text)
+        bmi = float(self.ids.input_bmi.text)
+        smk = float(self.ids.input_smk.text)
+        glucose = float(self.ids.input_glu.text)
+        glucose = 1 if glucose <= 100 else (2 if glucose <= 200 else 3)
+
+        X_test = [age, gender, height, weight, bmi, s_bp, d_bp, chol, glucose, smk]
+
+        path = '2 CVD/Models/'
+        mdl_1 = basic_models(path + 'Logistic Regression 4.sav', X_test, False)[0]
+        mdl_2 = basic_models(path + 'Decision Tree Classifier.sav', X_test, False)[0]
+        mdl_3 = basic_models(path + 'Logistic Regression 3.sav', X_test, False)[0]
+        mdl_4 = basic_models(path + 'Random Forest Classifier.sav', X_test, False)[0]
+        if mdl_1 == mdl_2 == mdl_3 == mdl_4:
+            if mdl_1 == 1:
+                print("High Chance of CVD")
+                mdl = 100
+            else:
+                print("Low Chance of CVD")
+                mdl = 0
+        else:
+            print("Medium Chance of CVD")
+            mdl = 50
+        return mdl
+
     def predict(self):
         diabetes_risk = self.diabetes()
         print(diabetes_risk)
+        cvd_risk = self.cvd()
+        print(cvd_risk)
 
 
 class SingleScreen(Screen):

@@ -19,13 +19,13 @@ import numpy as np
 # In[30]:
 
 
-os.chdir("C:/Users/ALI/Desktop/CLINTON/CIT/Project/Diseases Predictor/2 CVD/Old/Cardiovascular-Disease-Prediction-master")
+#os.chdir("C:/Users/ALI/Desktop/CLINTON/CIT/Project/Diseases Predictor/2 CVD/Old/Cardiovascular-Disease-Prediction-master")
 
 
 # In[31]:
 
 
-data = pd.read_csv("cardio_train.csv", sep = ';')
+data = pd.read_csv("Data/cardio_train.csv", sep = ';')
 
 
 # In[32]:

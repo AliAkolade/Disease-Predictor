@@ -1,0 +1,40 @@
+
+Saving Logistic Regression 2
+Logistic Intercept: [-8.13613898]
+training Score:0.716
+testing Score:0.712
+Done
+
+Saving Decision Tree Algorithm
+Accuracy on training set: 0.729
+Accuracy on test set: 0.724
+Done
+
+Saving Random Forest Algorithm
+0.7213279047917319
+Done
+
+Saving AdaBoost Algorithm
+0.7205136235515189
+Done
+
+Saving Logistic Regression 3
+Logistic Intercept: [0.00727643]
+training Score:0.804
+testing Score:0.803
+Done
+
+Saving Random Forest Classifier
+0.8025054807391169
+Done
+
+Saving Decision Tree Classifier
+Accuracy on training set: 0.804
+Accuracy on test set: 0.802
+Done
+
+Saving Logistic Regression 4
+Logistic Intercept: [0.00727643]
+training Score:0.804
+testing Score:0.803
+Done
