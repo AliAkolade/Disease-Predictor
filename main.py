@@ -134,6 +134,7 @@ class PredictScreen(Screen):
             print("High Chance of Stress")
         if mdl == 0:
             print("Low Chance of Stress")
+        return mdl
 
     def predict(self):
         diabetes_risk = self.diabetes()
@@ -142,6 +143,8 @@ class PredictScreen(Screen):
         print(cvd_risk)
         hyper_risk = self.hyper()
         print(hyper_risk)
+        stress_risk = self.stress()
+        print(stress_risk)
 
 
 class SingleScreen(Screen):
