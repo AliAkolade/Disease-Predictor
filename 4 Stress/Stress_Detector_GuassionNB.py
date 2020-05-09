@@ -13,7 +13,6 @@ X_train, X_test, y_train, y_test = train_test_split(df[['ECG(mV)', 'EMG(mV)','Fo
     test_size=0.30, random_state=12345)
 
 # Min-Max Scaling
-
 minmax_scale = preprocessing.MinMaxScaler().fit(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']])
 df_minmax = minmax_scale.transform(df[['ECG(mV)', 'EMG(mV)','Foot GSR(mV)','Hand GSR(mV)', 'HR(bpm)','RESP(mV)']])
 X_train_norm, X_test_norm, y_train_norm, y_test_norm = train_test_split(df_minmax, df['Target'],
@@ -106,9 +105,12 @@ print('Precision:- ' , metrics.precision_score(y_test,pred_test_norm))
 print()
 pred_data_norm = minmax_scale.transform([[-0.005,0.49,8.257,5.853,66.142,45.998]])
 pred = gnb_norm.predict(pred_data_norm)
+pred_2 = gnb.predict([[-0.005,0.49,8.257,5.853,66.142,45.998]])
+print('Predicted class for dataset [-0.005,0.49,8.257,5.853,66.142,45.998]:- ', pred_2)
 print('Predicted class for dataset [-0.005,0.49,8.257,5.853,66.142,45.998]:- ', pred)
 
 pred_data_norm = minmax_scale.transform([[0.001,0.931,5.91,19.773,99.065,35.59]])
 pred = gnb_norm.predict(pred_data_norm)
 print('Predicted class for dataset [0.001,0.931,5.91,19.773,99.065,35.59]:- ', pred)
-
+pred_2 = gnb.predict([[0.001,0.931,5.91,19.773,99.065,35.59]])
+print('Predicted class for dataset [0.001,0.931,5.91,19.773,99.065,35.59]:- ', pred_2)

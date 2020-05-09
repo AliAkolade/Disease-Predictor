@@ -2,9 +2,9 @@ import pickle
 import threading
 import time
 
+import numpy as np
 from kivy.app import App
 from kivy.clock import Clock, mainthread
-from kivy.properties import ObjectProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
 
 
@@ -16,12 +16,12 @@ class SplashScreen(Screen):
     def on_enter(self):
         Clock.schedule_once(self.get_screen)
 
-    def get_screen(self, dt):
+    def get_screen(self, a):
         threading.Thread(target=self.change_screen).start()
 
     @mainthread
     def change_screen(self):
-        time.sleep(1)
+        time.sleep(0.5)
         self.manager.current = "Select"
 
 
@@ -55,8 +55,8 @@ class PredictScreen(Screen):
         X_test = [preg, glu, bldsgr, sknthck, insln, bmi, dpf, age]
 
         path = '1 Diabetes/Models/'
-        dia_1 = basic_models(path+'K Means Clustering Diabetes.sav', X_test, False)[0]
-        dia_2 = basic_models(path+'Naive Bayes Diabetes.sav', X_test, False)[0]
+        dia_1 = basic_models(path + 'K Means Clustering Diabetes.sav', X_test, False)[0]
+        dia_2 = basic_models(path + 'Naive Bayes Diabetes.sav', X_test, False)[0]
         if dia_1 == dia_2:
             if dia_1 == 1:
                 print("High Chance of Diabetes")
@@ -101,11 +101,47 @@ class PredictScreen(Screen):
             mdl = 50
         return mdl
 
+    def hyper(self):
+        wc = float(self.ids.input_wc.text)
+        gender = float(self.ids.input_gen.text)
+        s_bp = float(self.ids.input_sbp.text)
+        d_bp = float(self.ids.input_dbp.text)
+        valid_X = [gender], [wc], [s_bp], [d_bp]
+        valid_X = np.array(valid_X)
+        valid_X = valid_X.reshape(1, 4)
+        mdl = basic_models('3 Hypertension/Models/Hypertension MLP.sav', valid_X, False)
+        if mdl < 0.45:
+            print("Low Chance of Hypertension")
+        if 0.65 > mdl >= 0.45:
+            print("Medium Chance of Hypertension")
+        if 0.65 <= mdl < 0.85:
+            print("High Chance of Hypertension")
+        if mdl >= 0.85:
+            print("Very High Chance of Hypertension")
+        return int(mdl[0][0] * 100)
+
+    def stress(self):
+        path = '4 Stress/Models/Stress GNB NonNorm.sav'
+        ecg = float(self.ids.input_wc.text)
+        emg = float(self.ids.input_gen.text)
+        f_gsr = float(self.ids.input_sbp.text)
+        h_gsr = float(self.ids.input_dbp.text)
+        hr = float(self.ids.input_sbp.text)
+        resp = float(self.ids.input_dbp.text)
+        X_test = [ecg, emg, f_gsr, h_gsr, hr, resp]
+        mdl = basic_models(path, X_test, False)[0]
+        if mdl == 1:
+            print("High Chance of Stress")
+        if mdl == 0:
+            print("Low Chance of Stress")
+
     def predict(self):
         diabetes_risk = self.diabetes()
         print(diabetes_risk)
         cvd_risk = self.cvd()
         print(cvd_risk)
+        hyper_risk = self.hyper()
+        print(hyper_risk)
 
 
 class SingleScreen(Screen):
