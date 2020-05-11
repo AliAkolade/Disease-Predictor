@@ -122,12 +122,12 @@ class PredictScreen(Screen):
 
     def stress(self):
         path = '4 Stress/Models/Stress GNB NonNorm.sav'
-        ecg = float(self.ids.input_wc.text)
-        emg = float(self.ids.input_gen.text)
-        f_gsr = float(self.ids.input_sbp.text)
-        h_gsr = float(self.ids.input_dbp.text)
-        hr = float(self.ids.input_sbp.text)
-        resp = float(self.ids.input_dbp.text)
+        ecg = float(self.ids.input_ecg.text)
+        emg = float(self.ids.input_emg.text)
+        f_gsr = float(self.ids.input_f_gsr.text)
+        h_gsr = float(self.ids.input_h_gsr.text)
+        hr = float(self.ids.input_hr.text)
+        resp = float(self.ids.input_resp.text)
         X_test = [ecg, emg, f_gsr, h_gsr, hr, resp]
         mdl = basic_models(path, X_test, False)[0]
         if mdl == 1:
