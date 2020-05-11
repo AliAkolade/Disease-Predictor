@@ -138,7 +138,7 @@ class PredictScreen(Screen):
 
     def cvs(self):
         comp = True if float(self.ids.input_comp.text) == 1 else False
-        hrs = float(self.ids.input_comp_hr.text)
+        hrs = float(self.ids.input_hrs.text)
         ciu = True if float(self.ids.input_cui.text) == 1 else False
         exp = True if float(self.ids.input_exp.text) == 1 else False
         if comp and hrs >= 4 and ciu and exp:
