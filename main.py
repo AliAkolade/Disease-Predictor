@@ -136,6 +136,13 @@ class PredictScreen(Screen):
             print("Low Chance of Stress")
         return mdl
 
+    def cvs(self):
+        comp = False
+        hrs = 0
+        ciu = False
+        exp = False
+        return mdl
+
     def predict(self):
         diabetes_risk = self.diabetes()
         print(diabetes_risk)
