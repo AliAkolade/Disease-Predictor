@@ -137,10 +137,22 @@ class PredictScreen(Screen):
         return mdl
 
     def cvs(self):
-        comp = False
-        hrs = 0
-        ciu = False
-        exp = False
+        comp = True if float(self.ids.input_comp.text) == 1 else False
+        hrs = float(self.ids.input_comp_hr.text)
+        ciu = True if float(self.ids.input_cui.text) == 1 else False
+        exp = True if float(self.ids.input_exp.text) == 1 else False
+        if comp and hrs >= 4 and ciu and exp:
+            mdl = 1
+            print("High Chance of Computer Vision Syndrome")
+        elif comp and hrs >= 4 and exp:
+            mdl = 1
+            print("Medium Chance of Computer Vision Syndrome")
+        elif not comp:
+            mdl = 0
+            print("Low Chance of Computer Vision Syndrome")
+        elif comp and exp:
+            mdl = 1
+            print("Medium Chance of Computer Vision Syndrome")
         return mdl
 
     def predict(self):
@@ -152,6 +164,8 @@ class PredictScreen(Screen):
         print(hyper_risk)
         stress_risk = self.stress()
         print(stress_risk)
+        cvs = self.cvs()
+        print(cvs)
 
 
 class SingleScreen(Screen):
