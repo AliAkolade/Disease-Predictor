@@ -44,7 +44,6 @@ def basic_models(path, X_test, f_scale):
 
 
 class PredictScreen(Screen):
-
     diabetes_risk = 0
     cvd_risk = 0
     hyper_risk = 0
@@ -166,9 +165,22 @@ class PredictScreen(Screen):
             print("Medium Chance of Computer Vision Syndrome")
         return mdl
 
-    def calculate(self):
 
-        return "OK"
+
+    def calculate(self):
+        r_list = {'Diabetes': self.diabetes_risk, 'Cardiovascular Diseases': self.cvd_risk,
+                  'Hypertension': self.hyper_risk, 'Stress': self.stress_risk, 'Computer Vision Syndrome': self.cvs}
+        values = list(r_list.values())
+        values.sort(reverse=True)
+        names = ["", "", "", "", ""]
+        for i in range(0, 5):
+            for key, value in r_list.items():
+                if int(values[i]) == int(value):
+                    names[i] = key
+        result = "Highest Risk Disease = "+str(names[0])+"\n\nInfo - \n"+str(names[0])+" - "+str(values[0])+"%\n"+str(names[1] +" - "+\
+                 str(values[1])+"%\n"+str(names[2])+" - "+str(values[2])+"%\n"+str(names[3])+" - "+str(values[3])+"%\n" + names[4])+" - "+\
+                 str(values[4])+"%\n"
+        return str(result)
 
     def showResult(self):
         result = Label(text=self.calculate())
