@@ -6,6 +6,8 @@ import numpy as np
 from kivy.app import App
 from kivy.clock import Clock, mainthread
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.label import Label
+from kivy.uix.popup import Popup
 
 
 class WindowManager(ScreenManager):
@@ -42,6 +44,13 @@ def basic_models(path, X_test, f_scale):
 
 
 class PredictScreen(Screen):
+
+    diabetes_risk = 0
+    cvd_risk = 0
+    hyper_risk = 0
+    stress_risk = 0
+    cvs = 0
+
     def diabetes(self):
         age = float(self.ids.input_age.text)
         preg = float(self.ids.input_preg.text)
@@ -60,10 +69,10 @@ class PredictScreen(Screen):
         if dia_1 == dia_2:
             if dia_1 == 1:
                 print("High Chance of Diabetes")
-                dia = 100
+                dia = 85
             else:
                 print("Low Chance of Diabetes")
-                dia = 0
+                dia = 20
         else:
             print("Medium Chance of Diabetes")
             dia = 50
@@ -92,13 +101,13 @@ class PredictScreen(Screen):
         if mdl_1 == mdl_2 == mdl_3 == mdl_4:
             if mdl_1 == 1:
                 print("High Chance of CVD")
-                mdl = 100
+                mdl = 90
             else:
                 print("Low Chance of CVD")
-                mdl = 0
+                mdl = 30
         else:
             print("Medium Chance of CVD")
-            mdl = 50
+            mdl = 60
         return mdl
 
     def hyper(self):
@@ -131,8 +140,10 @@ class PredictScreen(Screen):
         X_test = [ecg, emg, f_gsr, h_gsr, hr, resp]
         mdl = basic_models(path, X_test, False)[0]
         if mdl == 1:
+            mdl = 74
             print("High Chance of Stress")
         if mdl == 0:
+            mdl = 24
             print("Low Chance of Stress")
         return mdl
 
@@ -142,30 +153,40 @@ class PredictScreen(Screen):
         ciu = True if float(self.ids.input_cui.text) == 1 else False
         exp = True if float(self.ids.input_exp.text) == 1 else False
         if comp and hrs >= 4 and ciu and exp:
-            mdl = 1
+            mdl = 80
             print("High Chance of Computer Vision Syndrome")
         elif comp and hrs >= 4 and exp:
-            mdl = 1
+            mdl = 63
             print("Medium Chance of Computer Vision Syndrome")
         elif not comp:
-            mdl = 0
+            mdl = 10
             print("Low Chance of Computer Vision Syndrome")
         elif comp and exp:
-            mdl = 1
+            mdl = 59
             print("Medium Chance of Computer Vision Syndrome")
         return mdl
 
+    def calculate(self):
+
+        return "OK"
+
+    def showResult(self):
+        result = Label(text=self.calculate())
+        popupWindow = Popup(title="Result", title_align='center', content=result, size_hint=(0.7, 0.7))
+        popupWindow.open()
+
     def predict(self):
-        diabetes_risk = self.diabetes()
-        print(diabetes_risk)
-        cvd_risk = self.cvd()
-        print(cvd_risk)
-        hyper_risk = self.hyper()
-        print(hyper_risk)
-        stress_risk = self.stress()
-        print(stress_risk)
-        cvs = self.cvs()
-        print(cvs)
+        self.diabetes_risk = self.diabetes()
+        print(self.diabetes_risk)
+        self.cvd_risk = self.cvd()
+        print(self.cvd_risk)
+        self.hyper_risk = self.hyper()
+        print(self.hyper_risk)
+        self.stress_risk = self.stress()
+        print(self.stress_risk)
+        self.cvs = self.cvs()
+        print(self.cvs)
+        self.showResult()
 
 
 class SingleScreen(Screen):
