@@ -26,209 +26,65 @@ import numpy as np
 
 
 data = pd.read_csv("Data/cardio_train.csv", sep = ';')
-
-
 # In[32]:
-
-
 data.head()
 #age is in days
-
-
 # In[33]:
-
-
 data.columns
-
-
 # In[34]:
-
-
 data.isnull().sum()
-
-
 # In[13]:
-
-
 data.info()
-
-
 # In[14]:
-
-
 data.describe()
-
-
 # In[35]:
-
-
 from matplotlib import rcParams
 rcParams['figure.figsize'] = 11, 8
 data['years'] = (data['age']/365).round().astype('int')
 import seaborn as sns
 sns.countplot(x = 'years', hue = 'cardio', data = data)
-
 # we can see that from age of 55, the chances of having cvd increases.
-
-
-# In[36]:
-
-
 ## If we plot simple distplot of random numbers, we'll get normal distribution
 x = np.random.randn(100)
 norm_dist = sns.distplot(x)
-
-# In[37]:
-
-
 sns.distplot(data['years'] )
-
-
-# In[38]:
-
-
 sns.boxplot(x = 'cardio', y = 'years', data = data)
 ## We can see that people with cardio disease are older than people with no cardio disease
-
-
-# In[39]:
-
-
 data.categorical = data.loc[:,['cholesterol','gluc','smoke','active','alco']]
 data.categorical
-
-
-# In[40]:
-
-
 pd.melt(data.categorical)
-
-
-# In[41]:
-
-
 sns.countplot(x ='variable', hue ='value', data = pd.melt(data.categorical))
-
-
-# In[42]:
-
-
 data_long = pd.melt(data, id_vars=['cardio'],value_vars=['cholesterol','gluc','smoke','active','alco'])
-
-
-# In[43]:
-
-
 data_long
-
-
-# In[44]:
-
-
 import seaborn as sns
 sns.catplot(x = 'variable', hue = 'value', col = 'cardio', data= data_long, kind='count')
 # You can see that people with CVD have higher glucose and cholesterol level(2,3), but smoke, activeness and alcohol level doesn't show us much difference.
-
-
 # In[45]:
-
-
 ## In out data, the gender column has 1 and 2 values but we don't know which value represents male and female.
 ## So we'll calculate average height for both. And we'll assume that males are taller than females.
-
 data['gender'].value_counts()
-
-
 # In[46]:
-
-
 sns.countplot(x = 'cardio', hue = 'gender', data = data, palette='Set2')
 ## gender vs cardio.. you can see the number of males and females for each value of cardio
-
-
 # In[47]:
-
-
 data['weight'].describe()
-
-
-# In[48]:
-
-
 sns.boxplot(x = 'cardio', y = 'weight', data = data)
-
-
-# In[49]:
-
-
 data.groupby('gender')['height'].mean()
 # so males are 2 and females are 1
-
-
-# In[50]:
-
-
 ## Lets see who consumes more alcohol
-
 data.groupby('gender')['alco'].sum()
-
-## We can see that men consume more alcohol than females
-
-
-# In[51]:
-
-
-## Let's see if the target variables is balanced or not.
-
 data['cardio'].value_counts(normalize = True)
-
 ## Balanced data set cuz both values 1 and 0 are equally distributed in the dataset.
-
-
-# In[52]:
-
-
 ## Pandas Crosstab function to see if the dataset is balanced or not
 pd.crosstab(data['gender'],data['cardio'])  ## use normalize to see the percentage of values
-
-
-# In[53]:
-
-
 ## Checking for correlations of all attibutes with the target variableb
-
 data.corr()['cardio'].drop('cardio')
-
-
-# In[54]:
-
-
 data.hist(figsize=(15,20))
-
-
-# In[56]:
-
-
 ## Renaming columns
 data.columns = ['id', 'age','gender', 'height', 'weight', 'Systolic_BP', 'Diastolic_BP',
        'cholesterol', 'glucose', 'smoke', 'alcohol', 'active', 'cardio', 'years']
-
-
-# In[57]:
-
-
 data.head()
-
-
-# In[10]:
-
-
 ## Outliers check using BoxPlot
-
-
-# In[58]:
-
-
 import matplotlib.pyplot as plt
 columns = [ 'gender', 'height', 'weight', 'Systolic_BP', 'Diastolic_BP',
        'cholesterol', 'glucose', 'smoke', 'alcohol', 'active', 'cardio', 'years']
@@ -237,14 +93,9 @@ for i in range(len(columns)):
         fig,axes=plt.subplots(1,1)
         sns.boxplot(data=data,x=i, color='Green')
         fig.set_size_inches(15,5)
-
-
 # In[59]:
-
-
 for i in range(len(columns)):
     check_outliers(columns[i])
-    
 # We can see that height, weight, Systolic BP, Diastolic BP have outliers. Lets remove them.
 # Also, year has one outlier.
 # Also, we can see that, there are negative values of Systolic and Dialostic BP which doesn't make any sense. 
@@ -635,3 +486,5 @@ print("Logistic Intercept:", logreg.intercept_)
 print("training Score:{:.3f}".format(logreg.score(X_train, y_train)) )
 print("testing Score:{:.3f}".format(logreg.score(X_test, y_test)) )
 print("Done")
+
+print()
